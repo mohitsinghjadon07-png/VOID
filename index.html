@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#09070f">
+  <meta name="description" content="VOID — a personal access portal in a purple blockchain-inspired interface.">
+  <title>Void — Access Portal</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-theme="dark">
+  <div class="ambient ambient-one" aria-hidden="true"></div>
+  <div class="ambient ambient-two" aria-hidden="true"></div>
+  <div class="ambient ambient-three" aria-hidden="true"></div>
+  <div class="grid-glow" aria-hidden="true"></div>
+  <div class="particles" id="particles" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Void Access home">
+      <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+      <span class="brand-word">VOID<span class="brand-period">.</span></span>
+    </a>
+    <div class="top-actions">
+      <label class="language-control" for="languageSelect" aria-label="Choose language">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M3.5 12h17M12 3c2.3 2.4 3.4 5.4 3.4 9S14.3 18.6 12 21c-2.3-2.4-3.4-5.4-3.4-9S9.7 5.4 12 3Z"></path></svg>
+        <select id="languageSelect"><option value="en">EN</option><option value="hi">हिंदी</option></select>
+        <svg class="chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"></path></svg>
+      </label>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light theme" title="Toggle theme">
+        <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"></path></svg>
+        <svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 15.2A8.4 8.4 0 0 1 8.8 3.8 8.5 8.5 0 1 0 20.2 15.2Z"></path></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="eyebrow"><span class="live-dot"></span><span data-i18n="securePortal">PERSONAL ACCESS PORTAL</span><span class="eyebrow-line"></span><span class="version">V.01</span></div>
+
+    <div class="void-network" aria-hidden="true">
+      <div class="network-line line-one"></div><div class="network-line line-two"></div><div class="network-line line-three"></div><div class="network-line line-four"></div>
+      <div class="chain-block block-alpha"><span class="block-cube">◇</span><span class="block-name">GENESIS</span><small>00 / ROOT</small></div>
+      <div class="chain-block block-beta"><span class="block-cube">⬡</span><span class="block-name">LEDGER</span><small>01 / LINKED</small></div>
+      <div class="chain-block block-gamma"><span class="block-cube">◈</span><span class="block-name">HASH NODE</span><small>02 / VERIFIED</small></div>
+      <div class="chain-block block-delta"><span class="block-cube">▧</span><span class="block-name">VOID CHAIN</span><small>03 / ACTIVE</small></div>
+      <div class="network-orb orb-left"></div><div class="network-orb orb-right"></div>
+      <div class="network-caption caption-left">DECENTRALIZED <span>BY DESIGN</span></div>
+      <div class="network-caption caption-right">PRIVATE BY DEFAULT <span>· V.01</span></div>
+    </div>
+    <div class="cursor-aura" id="cursorAura" aria-hidden="true"></div>
+    <section class="card-scene" id="cardScene" aria-label="Login and registration">
+      <div class="auth-card" id="authCard">
+        <!-- LOGIN FACE -->
+        <section class="auth-face auth-front" aria-label="Sign in">
+          <aside class="visual-panel">
+            <div class="visual-topline"><span data-i18n="privateSpace">PRIVATE SPACE</span><span class="small-square"></span></div>
+            <div class="orbital-art" aria-hidden="true">
+              <div class="orbit orbit-a"></div><div class="orbit orbit-b"></div><div class="orbit orbit-c"></div>
+              <div class="orbit-core"><div class="core-gem"></div><div class="core-glint"></div></div>
+              <div class="orbit-node node-a"></div><div class="orbit-node node-b"></div><div class="orbit-node node-c"></div>
+              <div class="art-cross cross-a"></div><div class="art-cross cross-b"></div>
+            </div>
+            <div class="visual-bottom">
+              <div class="micro-label" data-i18n="authGateway">AUTHENTICATION GATEWAY</div>
+              <div class="signal-row"><span class="signal-bars"><i></i><i></i><i></i><i></i><i></i></span><span data-i18n="systemReady">SYSTEM READY</span><span class="signal-value">99.9</span></div>
+            </div>
+            <div class="visual-index">01 <span>/</span> 04</div>
+          </aside>
+          <div class="form-panel">
+            <div class="panel-heading">
+              <div class="step-label"><span class="step-dot"></span><span data-i18n="welcomeBack">WELCOME BACK</span></div>
+              <div class="heading-symbol" aria-hidden="true">↗</div>
+            </div>
+            <div class="form-copy">
+              <h1 data-i18n="signIn">Sign in<span class="accent-period">.</span></h1>
+              <p data-i18n="enterCredentials">Enter your credentials to continue.</p>
+            </div>
+            <form class="auth-form" id="loginForm" autocomplete="on" novalidate>
+              <label class="field-label" for="loginId" data-i18n="userId">USER ID</label>
+              <div class="input-wrap">
+                <svg class="field-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"></circle><path d="M5 20c.5-3.3 3.1-5.2 7-5.2s6.5 1.9 7 5.2"></path></svg>
+                <input id="loginId" name="username" placeholder="Enter your ID" data-i18n-placeholder="enterId" autocomplete="username" required>
+                <span class="input-end">ID</span>
+              </div>
+              <div class="field-label-row"><label class="field-label" for="loginPassword" data-i18n="password">PASSWORD</label><button class="text-button" id="forgotButton" type="button" data-i18n="forgotPassword">Forgot?</button></div>
+              <div class="input-wrap">
+                <svg class="field-icon lock-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="10" width="15" height="10" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v2.5"></path></svg>
+                <input id="loginPassword" name="password" type="password" placeholder="Enter your password" data-i18n-placeholder="enterPassword" autocomplete="current-password" required>
+                <button class="eye-button" type="button" data-target="loginPassword" aria-label="Show password"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.3-6 9.5-6 9.5 6 9.5 6-3.3 6-9.5 6-9.5-6-9.5-6Z"></path><circle cx="12" cy="12" r="2.5"></circle></svg></button>
+              </div>
+              <div class="form-message" id="loginMessage" role="status" aria-live="polite"></div>
+              <button class="primary-button" type="submit"><span data-i18n="signInButton">Sign in</span><span class="button-arrow">↗</span><span class="button-sheen"></span></button>
+            </form>
+            <div class="demo-box">
+              <div class="demo-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 20 7v5c0 4.5-3.1 7.6-8 9-4.9-1.4-8-4.5-8-9V7l8-4Z"></path><path d="m8.5 12 2.3 2.3 4.7-5"></path></svg></div>
+              <div class="demo-details"><span class="demo-label" data-i18n="demoAccess">DEMO ACCESS</span><span class="demo-line"><span data-i18n="idLabel">ID</span> <b>DEMO-001</b></span><span class="demo-line"><span data-i18n="passLabel">PASS</span> <b>Void@2026</b></span></div>
+              <button class="copy-demo" id="copyDemo" type="button" aria-label="Use demo credentials" title="Use demo credentials"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"></rect><path d="M16 8V5a1.5 1.5 0 0 0-1.5-1.5h-9A1.5 1.5 0 0 0 4 5v9a1.5 1.5 0 0 0 1.5 1.5H8"></path></svg></button>
+            </div>
+            <div class="form-footer"><span data-i18n="noAccount">New around here?</span><button class="flip-link" type="button" data-flip="signup"><span data-i18n="createAccount">Create an account</span><span>↗</span></button></div>
+            <div class="panel-bottom"><span><span class="tiny-lock">◆</span> <span data-i18n="encryptedSession">PRIVATE SESSION</span></span><span>© VOID 2026</span></div>
+          </div>
+        </section>
+
+        <!-- SIGN-UP FACE -->
+        <section class="auth-face auth-back" aria-label="Create account" aria-hidden="true">
+          <aside class="visual-panel signup-visual">
+            <div class="visual-topline"><span data-i18n="newIdentity">NEW IDENTITY</span><span class="small-square"></span></div>
+            <div class="orbital-art signup-art" aria-hidden="true">
+              <div class="orbit orbit-a"></div><div class="orbit orbit-b"></div><div class="orbit orbit-c"></div>
+              <div class="orbit-core"><div class="core-gem"></div><div class="core-glint"></div></div>
+              <div class="orbit-node node-a"></div><div class="orbit-node node-b"></div><div class="orbit-node node-c"></div>
+              <div class="art-cross cross-a"></div><div class="art-cross cross-b"></div>
+              <div class="art-rune">+</div>
+            </div>
+            <div class="visual-bottom"><div class="micro-label" data-i18n="createSecureProfile">CREATE YOUR SECURE PROFILE</div><div class="signal-row"><span class="signal-bars"><i></i><i></i><i></i><i></i><i></i></span><span data-i18n="registrationReady">REGISTRATION READY</span><span class="signal-value">02</span></div></div>
+            <div class="visual-index">02 <span>/</span> 04</div>
+          </aside>
+          <div class="form-panel signup-panel">
+            <div class="panel-heading"><div class="step-label"><span class="step-dot"></span><span data-i18n="membershipSetup">MEMBERSHIP SETUP</span></div><div class="heading-symbol" aria-hidden="true">✳</div></div>
+            <div class="form-copy"><h2 data-i18n="createAccountTitle">Create account<span class="accent-period">.</span></h2><p data-i18n="startYourSpace">Set up your personal access.</p></div>
+            <form class="auth-form signup-form" id="signupForm" autocomplete="on" novalidate>
+              <label class="field-label" for="signupId" data-i18n="chooseId">CHOOSE A USER ID</label>
+              <div class="input-wrap"><svg class="field-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"></circle><path d="M5 20c.5-3.3 3.1-5.2 7-5.2s6.5 1.9 7 5.2"></path></svg><input id="signupId" name="new-username" placeholder="Create a unique ID" data-i18n-placeholder="createId" autocomplete="username" minlength="3" required><span class="input-end">ID</span></div>
+              <label class="field-label" for="signupPassword" data-i18n="createPassword">CREATE PASSWORD</label>
+              <div class="input-wrap"><svg class="field-icon lock-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="10" width="15" height="10" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v2.5"></path></svg><input id="signupPassword" name="new-password" type="password" placeholder="At least 6 characters" data-i18n-placeholder="minPassword" autocomplete="new-password" minlength="6" required><button class="eye-button" type="button" data-target="signupPassword" aria-label="Show password"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.3-6 9.5-6 9.5 6 9.5 6-3.3 6-9.5 6-9.5-6-9.5-6Z"></path><circle cx="12" cy="12" r="2.5"></circle></svg></button></div>
+              <label class="field-label" for="signupConfirm" data-i18n="confirmPassword">CONFIRM PASSWORD</label>
+              <div class="input-wrap"><svg class="field-icon lock-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="10" width="15" height="10" rx="2"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v2.5"></path></svg><input id="signupConfirm" name="confirm-password" type="password" placeholder="Repeat your password" data-i18n-placeholder="repeatPassword" autocomplete="new-password" required><button class="eye-button" type="button" data-target="signupConfirm" aria-label="Show password"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.3-6 9.5-6 9.5 6 9.5 6-3.3 6-9.5 6-9.5-6-9.5-6Z"></path><circle cx="12" cy="12" r="2.5"></circle></svg></button></div>
+              <div class="form-message" id="signupMessage" role="status" aria-live="polite"></div>
+              <button class="primary-button" type="submit"><span data-i18n="createAccountButton">Create account</span><span class="button-arrow">↗</span><span class="button-sheen"></span></button>
+            </form>
+            <div class="form-footer signup-footer"><span data-i18n="alreadyRegistered">Already registered?</span><button class="flip-link" type="button" data-flip="login"><span data-i18n="returnToSignIn">Return to sign in</span><span>↗</span></button></div>
+            <div class="panel-bottom"><span><span class="tiny-lock">◆</span> <span data-i18n="localDemoProfile">LOCAL DEMO PROFILE</span></span><span>© VOID 2026</span></div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <footer class="page-footer"><span><span class="footer-status"></span><span data-i18n="allSystemsNominal">ALL SYSTEMS NOMINAL</span></span><span class="footer-center" data-i18n="madeForYou">A SPACE OF YOUR OWN</span><span class="footer-right">IND <span class="footer-divider">/</span> UTC+05:30</span></footer>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"><span class="toast-check">✓</span><span id="toastText"></span></div>
+  <div class="success-overlay" id="successOverlay" aria-hidden="true">
+    <div class="success-card" role="dialog" aria-modal="true" aria-labelledby="successTitle">
+      <div class="success-emblem"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="m8 21 8 8L33 12"></path></svg></div>
+      <div class="success-kicker" data-i18n="identityVerified">IDENTITY VERIFIED</div>
+      <h2 id="successTitle" data-i18n="accessGranted">Access granted<span class="accent-period">.</span></h2>
+      <p id="successDescription" data-i18n="interiorComingNext">Your sign-in worked. Your personal home interface is the next stage.</p>
+      <button class="primary-button success-close" id="closeSuccess" type="button"><span data-i18n="backToPortal">Back to portal</span><span class="button-arrow">↗</span><span class="button-sheen"></span></button>
+    </div>
+  </div>
+  <script src="app.js"></script>
+  <script src="void-effects.js"></script>
+</body>
+</html>
