@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#09070f">
+  <meta name="description" content="Public VOID profile and GitHub projects."><title>VOID / Public Profile</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="dashboard.css"><link rel="stylesheet" href="public-profile.css">
+</head>
+<body data-theme="dark">
+  <div class="ambient ambient-left" aria-hidden="true"></div><div class="ambient ambient-right" aria-hidden="true"></div><div class="grain" aria-hidden="true"></div><canvas id="constellation" class="constellation" aria-hidden="true"></canvas><div class="cursor-aura" id="cursorAura" aria-hidden="true"></div><div class="scroll-progress" aria-hidden="true"><span id="scrollProgress"></span></div>
+  <div class="profile-public-page">
+    <header class="public-profile-nav"><a class="brand" href="index.html"><span class="brand-symbol"><i></i><i></i><i></i></span><span>VOID<span class="brand-dot">.</span></span></a><a class="text-link" href="index.html">RETURN TO VOID <span>↗</span></a></header>
+    <main class="public-profile-main">
+      <div class="public-profile-error" id="publicProfileStatus" role="status" aria-live="polite">Loading public VOID profile…</div>
+      <section class="public-profile-cover" id="publicProfileCover" hidden>
+        <div class="public-profile-top"><img class="public-profile-avatar" id="publicAvatar" alt="GitHub profile avatar" src=""><div><p class="section-marker"><span>VOID IDENTITY</span><i></i></p><h1 class="public-profile-name" id="publicDisplayName">VOID USER</h1><div class="public-profile-handle" id="publicVoidId">VOID ID / …</div><div class="public-profile-handle" id="publicGithubId"></div></div></div>
+        <p class="public-profile-bio" id="publicBio"></p><div class="public-profile-stats" id="publicStats"></div>
+        <div class="public-profile-actions"><a id="publicGithubLink" href="https://github.com" target="_blank" rel="noopener noreferrer">OPEN GITHUB ↗</a><a href="index.html">OPEN YOUR OWN VOID ↗</a></div>
+      </section>
+      <section class="public-profile-projects" id="publicProjects" hidden><div class="section-marker"><span>01</span><i></i><span>PUBLIC BUILDS</span></div><h2 id="publicProjectsTitle">Latest projects.</h2><p class="public-profile-bio" id="publicProjectsNote">Public repositories, sorted by recent activity.</p><div class="project-grid" id="publicProjectGrid"></div><div class="repo-list" id="publicRepoList"></div></section>
+    </main>
+    <footer class="site-footer"><a class="footer-brand" href="index.html">VOID<span>.</span></a><span>PUBLIC PROFILE / GITHUB SYNC</span><a id="publicFooterGithub" href="https://github.com" target="_blank" rel="noopener noreferrer">GITHUB ↗</a><span class="footer-year">VOID</span></footer>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-config.js"></script><script src="github-public.js"></script><script src="public-profile.js"></script>
+</body></html>
