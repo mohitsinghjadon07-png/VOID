@@ -1,3 +1,0 @@
-body { overflow-x:hidden; } .public-profile-main { min-height:72vh; } .public-profile-cover { animation:profileIn .75s cubic-bezier(.2,.8,.2,1) both; } .public-profile-projects { animation:profileIn .6s .1s cubic-bezier(.2,.8,.2,1) both; } .public-profile-projects .project-card { animation:none; } #publicProjectsNote { margin:0 0 22px; }
-@keyframes profileIn { from { opacity:0; transform:translateY(22px); filter:blur(5px); } to { opacity:1; transform:translateY(0); filter:blur(0); } }
-@media (prefers-reduced-motion:reduce) { .public-profile-cover,.public-profile-projects { animation:none; } }
