@@ -1,288 +1,96 @@
-/* VOID / CINEMATIC DEPTH LAYER
-   Additive enhancement. Does not replace dashboard.css or dashboard.js. */
+/* VOID Cinematic V2 — visible depth layer
+   This is an ADD-ON stylesheet. Keep dashboard.css and dashboard.js unchanged. */
 
 :root {
-  --void-cinema-violet: #9d69f5;
-  --void-cinema-lilac: #d4b7ff;
-  --void-cinema-ink: #09070f;
-  --void-cinema-line: rgba(201, 171, 255, .18);
+  --void-v2-purple: #a875ff;
+  --void-v2-lilac: #e4ceff;
+  --void-v2-line: rgba(195, 153, 255, .25);
 }
 
-/* Keep the existing design system; add atmosphere rather than repainting it. */
-body.void-cinematic-ready .hero-section {
+/* HERO: make the atmosphere genuinely visible instead of barely tinted. */
+.hero-section {
+  isolation: isolate;
+  overflow: hidden;
   background-image:
-    radial-gradient(ellipse at 50% 44%, rgba(105, 52, 177, .095), transparent 43%),
-    radial-gradient(ellipse at 12% 84%, rgba(92, 43, 160, .055), transparent 35%);
+    radial-gradient(ellipse at 50% 42%, rgba(113, 54, 210, .20), transparent 42%),
+    radial-gradient(ellipse at 8% 88%, rgba(100, 47, 180, .13), transparent 34%),
+    radial-gradient(ellipse at 94% 16%, rgba(153, 93, 245, .11), transparent 32%);
 }
 
-body.void-cinematic-ready .hero-topline,
-body.void-cinematic-ready .hero-copy,
-body.void-cinematic-ready .hero-bottomline,
-body.void-cinematic-ready .hero-edge-label {
-  position: relative;
-  z-index: 3;
-}
-
-body.void-cinematic-ready .hero-visual {
-  filter: drop-shadow(0 0 32px rgba(151, 90, 244, .10));
-}
-
-/* Injected cinematic field inside the hero. */
-.void-depth-field {
+.hero-section::after {
+  content: "";
   position: absolute;
   z-index: 0;
   inset: 0;
-  overflow: hidden;
   pointer-events: none;
-  contain: paint;
-  isolation: isolate;
-  opacity: .95;
+  background:
+    linear-gradient(180deg, transparent 62%, rgba(8, 5, 15, .25)),
+    radial-gradient(ellipse at center, transparent 35%, rgba(7, 5, 12, .22) 100%);
+}
+
+.hero-topline,
+.hero-bottomline,
+.hero-edge-label,
+.hero-copy {
+  position: relative;
+  z-index: 4;
+}
+
+.hero-visual {
+  z-index: 2 !important;
+  opacity: .96 !important;
+  filter: drop-shadow(0 0 24px rgba(155, 91, 255, .20));
+}
+
+.hero-visual .hero-orbit circle,
+.hero-visual .hero-orbit ellipse,
+.hero-visual .hero-orbit path {
+  stroke: rgba(198, 158, 255, .45);
+}
+
+.hero-name .name-last {
+  background: linear-gradient(108deg, var(--text, #f9f3ff) 0%, #d5b5ff 24%, #9b65fa 48%, #f0e1ff 68%, #ab80ff 88%, #f9f3ff 100%);
+  background-size: 260% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: voidV2TitleFlow 6s ease-in-out infinite;
+}
+
+.hero-name .name-period {
+  -webkit-text-fill-color: var(--purple-bright, #c69aff);
+}
+
+.name-rule > span {
+  box-shadow: 0 0 18px rgba(175, 126, 255, .72);
+}
+
+/* JS-injected field: grid, halos, orbit rings and scan beam. */
+.void-depth-field {
+  z-index: 1 !important;
+  opacity: 1 !important;
+  pointer-events: none;
 }
 
 .void-depth-grid {
-  position: absolute;
-  left: 50%;
-  bottom: -34%;
-  width: min(1120px, 118vw);
-  height: 84%;
-  transform: translate3d(-50%, var(--void-grid-y, 0px), 0) perspective(700px) rotateX(62deg) scale(1.18);
-  transform-origin: 50% 100%;
+  opacity: .52 !important;
+  background-size: 48px 48px !important;
   background-image:
-    linear-gradient(rgba(189, 146, 255, .11) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(189, 146, 255, .11) 1px, transparent 1px);
-  background-size: 56px 56px;
-  mask-image: linear-gradient(to top, rgba(0,0,0,.8), transparent 86%);
-  opacity: .22;
-}
-
-.void-depth-halo {
-  position: absolute;
-  display: block;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  will-change: transform;
+    linear-gradient(rgba(194, 154, 255, .20) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(194, 154, 255, .20) 1px, transparent 1px) !important;
+  animation: voidV2GridFlow 18s linear infinite;
 }
 
 .void-depth-halo-a {
-  width: clamp(220px, 38vw, 520px);
-  top: 7%; left: 3%;
-  background: radial-gradient(circle, rgba(132, 74, 223, .13), rgba(132, 74, 223, .035) 42%, transparent 72%);
-  transform: translate3d(var(--void-halo-a-x, 0px), var(--void-halo-a-y, 0px), 0);
+  background: radial-gradient(circle, rgba(147, 80, 255, .34), rgba(132, 74, 223, .10) 42%, transparent 72%) !important;
+  animation: voidV2FloatA 10s ease-in-out infinite alternate;
 }
 
 .void-depth-halo-b {
-  width: clamp(260px, 42vw, 590px);
-  right: -8%; bottom: -8%;
-  background: radial-gradient(circle, rgba(94, 54, 179, .12), rgba(94, 54, 179, .025) 46%, transparent 73%);
-  transform: translate3d(var(--void-halo-b-x, 0px), var(--void-halo-b-y, 0px), 0);
+  background: radial-gradient(circle, rgba(112, 71, 237, .29), rgba(94, 54, 179, .08) 46%, transparent 73%) !important;
+  animation: voidV2FloatB 12s ease-in-out infinite alternate;
 }
 
 .void-depth-halo-c {
-  width: clamp(110px, 17vw, 220px);
-  top: 24%; right: 21%;
-  background: radial-gradient(circle, rgba(208, 177, 255, .12), rgba(155, 103, 234, .025) 46%, transparent 72%);
-  transform: translate3d(var(--void-halo-c-x, 0px), var(--void-halo-c-y, 0px), 0);
-}
-
-.void-depth-orbit {
-  position: absolute;
-  left: 50%; top: 49%;
-  display: block;
-  border: 1px solid rgba(198, 159, 255, .13);
-  border-radius: 50%;
-  box-shadow: 0 0 34px rgba(130, 72, 215, .045), inset 0 0 25px rgba(130, 72, 215, .025);
-  transform: translate3d(-50%, calc(-50% + var(--void-orbit-y, 0px)), 0) rotate(var(--void-orbit-rotation, 0deg));
-}
-
-.void-depth-orbit-a { width: clamp(390px, 57vw, 770px); aspect-ratio: 1; }
-.void-depth-orbit-b { width: clamp(300px, 45vw, 610px); aspect-ratio: 1.25; border-style: dashed; opacity: .58; }
-
-.void-depth-beam {
-  position: absolute;
-  left: -15%; top: 0;
-  width: 130%; height: 1px;
-  opacity: .55;
-  background: linear-gradient(90deg, transparent 8%, rgba(194, 151, 255, .20) 35%, rgba(218, 195, 255, .38) 50%, rgba(194, 151, 255, .16) 65%, transparent 92%);
-  box-shadow: 0 0 24px rgba(160, 102, 245, .11);
-  transform: translate3d(var(--void-beam-x, 0px), 0, 0);
-}
-
-/* Fine-grain polish for the original top navigation and reading rail. */
-body.void-cinematic-ready .site-nav {
-  backdrop-filter: blur(0);
-  -webkit-backdrop-filter: blur(0);
-}
-
-body.void-cinematic-ready .site-nav.is-scrolled {
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
-  backdrop-filter: blur(22px);
-  -webkit-backdrop-filter: blur(22px);
-  box-shadow: 0 10px 32px rgba(0, 0, 0, .08);
-}
-
-body.void-cinematic-ready .scroll-rail {
-  border-color: rgba(201, 171, 255, .20);
-  box-shadow: 0 18px 54px rgba(0, 0, 0, .20), inset 0 1px rgba(255,255,255,.04);
-}
-
-body.void-cinematic-ready .scroll-progress span {
-  background: linear-gradient(90deg, #6734bb 0%, #a968ff 44%, #e0caff 76%, #a968ff 100%);
-  background-size: 180% 100%;
-  animation: voidProgressGlow 5s linear infinite;
-}
-
-@keyframes voidProgressGlow { to { background-position: 180% 0; } }
-
-/* Cards get a more deliberate material treatment without removing the original art. */
-body.void-cinematic-ready .project-card {
-  border-color: rgba(201, 171, 255, .16);
-  box-shadow: 0 16px 50px rgba(0, 0, 0, .07);
-  backface-visibility: hidden;
-}
-
-body.void-cinematic-ready .project-card:hover {
-  border-color: rgba(204, 172, 255, .36);
-  box-shadow: 0 25px 64px rgba(0, 0, 0, .23), 0 0 32px rgba(111, 48, 183, .10);
-}
-
-body.void-cinematic-ready .project-art {
-  box-shadow: inset 0 1px rgba(255,255,255,.035), 0 8px 24px rgba(0,0,0,.12);
-}
-
-body.void-cinematic-ready .project-info h3 {
-  text-wrap: balance;
-}
-
-body.void-cinematic-ready .tag-row span {
-  border-color: rgba(201, 171, 255, .16);
-  transition: border-color .2s ease, background .2s ease;
-}
-
-body.void-cinematic-ready .project-card:hover .tag-row span {
-  border-color: rgba(201, 171, 255, .25);
-}
-
-/* Profile editor, search and archive: subtle glass depth rather than loud glow. */
-body.void-cinematic-ready .identity-panel {
-  border-color: rgba(201, 171, 255, .17);
-  box-shadow: 0 18px 48px rgba(0, 0, 0, .09), inset 0 1px rgba(255,255,255,.025);
-  transition: border-color .25s ease, box-shadow .25s ease, transform .25s ease;
-}
-
-body.void-cinematic-ready .identity-panel:hover {
-  border-color: rgba(201, 171, 255, .27);
-  box-shadow: 0 22px 52px rgba(0, 0, 0, .13), inset 0 1px rgba(255,255,255,.035);
-}
-
-body.void-cinematic-ready .void-form input[type="text"],
-body.void-cinematic-ready .void-form textarea,
-body.void-cinematic-ready .profile-search-form input {
-  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
-}
-
-body.void-cinematic-ready .void-form input:focus,
-body.void-cinematic-ready .void-form textarea:focus,
-body.void-cinematic-ready .profile-search-form input:focus {
-  background: color-mix(in srgb, var(--panel) 90%, transparent);
-  box-shadow: 0 0 0 3px rgba(169, 104, 255, .10), 0 0 22px rgba(122, 53, 216, .07);
-}
-
-body.void-cinematic-ready .profile-search-result {
-  border-color: rgba(201, 171, 255, .24);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, .10);
-}
-
-body.void-cinematic-ready .repo-archive {
-  border-color: rgba(201, 171, 255, .18);
-  background: linear-gradient(110deg, rgba(153, 88, 242, .12), rgba(255,255,255,.012) 70%);
-}
-
-body.void-cinematic-ready .repo-archive:hover {
-  border-color: rgba(201, 171, 255, .34);
-  box-shadow: 0 14px 38px rgba(0, 0, 0, .12);
-}
-
-/* Pointer-reactive magnetic movement uses CSS's independent translate property. */
-body.void-cinematic-ready .void-magnetic {
-  translate: var(--void-magnet-x, 0px) var(--void-magnet-y, 0px);
-  transition: translate .22s cubic-bezier(.2,.8,.2,1);
-  will-change: translate;
-}
-
-/* A small, quiet back-to-top control appears after the first screenful. */
-.void-top-button {
-  position: fixed;
-  z-index: 45;
-  right: clamp(16px, 2.5vw, 32px);
-  bottom: clamp(16px, 2.5vw, 30px);
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  min-height: 42px;
-  padding: 0 14px;
-  border: 1px solid rgba(201, 171, 255, .28);
-  border-radius: 999px;
-  color: var(--text, #f8f3ff);
-  background: color-mix(in srgb, var(--panel, #100c19) 86%, transparent);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, .22);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  font: 9px/1 var(--mono, monospace);
-  letter-spacing: .12em;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transform: translateY(8px);
-  transition: opacity .25s ease, visibility .25s ease, transform .25s ease, border-color .2s ease, background .2s ease;
-  cursor: pointer;
-}
-
-.void-top-button.is-visible {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-  transform: translateY(0);
-}
-
-.void-top-button:hover {
-  border-color: rgba(211, 184, 255, .5);
-  background: color-mix(in srgb, var(--panel-raised, #151020) 92%, transparent);
-}
-
-.void-top-button .void-top-arrow {
-  color: var(--purple-bright, #d2b0ff);
-  font: 17px/1 var(--sans, sans-serif);
-  transition: transform .2s ease;
-}
-
-.void-top-button:hover .void-top-arrow { transform: translateY(-2px); }
-
-/* Theme-aware surfaces stay legible when the existing light-mode switch is used. */
-body[data-theme="light"].void-cinematic-ready .void-depth-field { opacity: .48; }
-body[data-theme="light"].void-cinematic-ready .void-depth-grid {
-  background-image:
-    linear-gradient(rgba(106, 61, 165, .12) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(106, 61, 165, .12) 1px, transparent 1px);
-}
-body[data-theme="light"].void-cinematic-ready .void-top-button {
-  color: var(--text, #20162c);
-  border-color: rgba(91, 47, 141, .25);
-  box-shadow: 0 10px 30px rgba(60, 37, 77, .12);
-}
-
-@media (max-width: 760px) {
-  .void-depth-grid { background-size: 38px 38px; opacity: .15; }
-  .void-depth-orbit-a { width: 115vw; }
-  .void-depth-orbit-b { width: 86vw; }
-  .void-top-button { right: 14px; bottom: 14px; min-height: 39px; padding: 0 12px; }
-  body.void-cinematic-ready .identity-panel:hover { transform: none; }
-}
-
-@media (pointer: coarse), (prefers-reduced-motion: reduce) {
-  .void-depth-halo, .void-depth-orbit, .void-depth-beam { will-change: auto; }
-  .void-depth-grid { transform: translate3d(-50%, 0, 0) perspective(700px) rotateX(62deg) scale(1.18); }
-  body.void-cinematic-ready .scroll-progress span { animation: none; }
-  body.void-cinematic-ready .void-magnetic { translate: none; transition: none; }
-  .void-top-button, .void-top-button .void-top-arrow { transition: none; }
-}
+  background: radial-gradient(circle, rgba(222, 197, 255, .29), rgba(155, 103, 234, .08) 46%, transparent 72%) !important;
+  animation: voidV2FloatC 8s ease-in-out infinite alternate;
