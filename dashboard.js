@@ -248,7 +248,7 @@
     const introSignature = document.getElementById('introSignature'); if (introSignature) introSignature.textContent = `— ${displayName.toUpperCase()}`;
     const introBio = document.getElementById('introBioText');
     if (introBio) introBio.textContent = profile?.bio?.trim() || 'Your projects, learning notes, and public repositories — gathered into one space that stays yours.';
-    const footer = document.getElementById('footerSignature'); if (footer) footer.textContent = `A WORKSPACE BY ${displayName.toUpperCase()}`;
+    const footer = document.getElementById('footerSignature'); if (footer) footer.textContent = `MADE BY MOHIT JADON · A VOID WORKSPACE FOR ${displayName.toUpperCase()}`;
     document.title = `VOID / ${displayName}`;
     return displayName;
   }

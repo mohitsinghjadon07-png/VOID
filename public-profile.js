@@ -14,36 +14,126 @@
   }
   function archiveRow(repo,index){const a=document.createElement('a');a.href=repo.html_url;a.target='_blank';a.rel='noopener noreferrer';a.className='repo-row';text(a,'span','repo-index',String(index+1).padStart(2,'0'));text(a,'span','repo-name',repo.name);text(a,'span','repo-description',repo.description||`${repo.language||'Public repository'} · UPDATED ${formatDate(repo.updated_at)}`);text(a,'span','repo-arrow','↗');return a;}
   async function init(){
-    const voidId=new URLSearchParams(location.search).get('id')||'';
-    if(!/^[A-Za-z0-9_-]{3,32}$/.test(voidId)){status.textContent='This profile link is incomplete. Use profile.html?id=VOID_ID.';return;}
-    const config=window.VOID_CONFIG||{};
-    if(!config.supabaseUrl||!config.supabasePublishableKey||config.supabaseUrl.includes('PASTE_')||!window.supabase?.createClient){status.textContent='Profile lookup needs the Supabase URL and public key in supabase-config.js.';return;}
-    try{
-      const client=window.supabase.createClient(config.supabaseUrl,config.supabasePublishableKey,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}});
-      const {data,error}=await client.rpc('void_public_profile_by_username',{input_username:voidId});
-      if(error)throw new Error('Profile lookup is not configured yet. Run supabase-setup/void-multiuser-upgrade.sql in Supabase.');
-      const profile=Array.isArray(data)?data[0]:data;
-      if(!profile){status.textContent='No public VOID profile was found for this ID. The user may have disabled profile discovery.';return;}
-      const cover=$('#publicProfileCover');cover.hidden=false;status.hidden=true;
-      $('#publicDisplayName').textContent=profile.display_name||profile.void_id;$('#publicVoidId').textContent='VOID ID / '+profile.void_id;
-      $('#publicBio').textContent=profile.bio||'A VOID builder. No bio added yet.';
-      if(!profile.github_username){$('#publicGithubId').textContent='GitHub / NOT LINKED';$('#publicGithubLink').hidden=true;$('#publicProjects').hidden=true;$('#publicBio').textContent=(profile.bio||'')+' This user has not connected a GitHub username yet.';return;}
-      $('#publicGithubId').textContent='GITHUB / @'+profile.github_username;
-      const ghLink=`https://github.com/${encodeURIComponent(profile.github_username)}`;$('#publicGithubLink').href=ghLink;$('#publicFooterGithub').href=ghLink;
+    const voidId = new URLSearchParams(location.search).get('id') || '';
+    if (!/^[A-Za-z0-9_-]{3,39}$/.test(voidId)) {
+      status.textContent = 'Enter a valid VOID ID or GitHub username in the profile link.';
+      return;
+    }
+
+    const config = window.VOID_CONFIG || {};
+    let profile = null;
+    let bundle = null;
+    let lookupProblem = '';
+
+    // Try a registered VOID profile first. If this ID is a GitHub username,
+    // or the profile RPC is unavailable, fall back to GitHub's public API.
+    if (config.supabaseUrl && config.supabasePublishableKey &&
+        !config.supabaseUrl.includes('PASTE_') && window.supabase?.createClient) {
       try {
-        const bundle=await window.VOIDGitHub.getBundle(profile.github_username);
-        $('#publicAvatar').src=bundle.profile.avatar_url||'';$('#publicAvatar').alt=`${bundle.profile.login} GitHub avatar`;
-        const stats=$('#publicStats');stats.replaceChildren();
-        [[num(bundle.profile.public_repos),'PUBLIC REPOS'],[num(bundle.profile.followers),'FOLLOWERS'],[num(bundle.profile.following),'FOLLOWING'],[formatDate(bundle.profile.created_at),'ON GITHUB SINCE']].forEach(([v,k])=>text(stats,'span','',`${v} / ${k}`));
-        const projects=$('#publicProjects');projects.hidden=false;
-        $('#publicProjectsTitle').textContent=`${bundle.profile.name||bundle.profile.login} — public work.`;
-        const note=$('#publicProjectsNote');note.textContent=`Sorted by latest repository activity · updated ${new Date(bundle.fetchedAt||Date.now()).toLocaleString('en-IN',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})}${bundle.stale?' · showing cached data':''}${bundle.truncated?' · latest '+bundle.repositories.length+' repositories shown':''}.`;
-        const grid=$('#publicProjectGrid'),list=$('#publicRepoList');grid.replaceChildren();list.replaceChildren();
-        bundle.repositories.slice(0,6).forEach((repo,i)=>grid.appendChild(card(repo,i,i===0)));
-        bundle.repositories.slice(6).forEach((repo,i)=>list.appendChild(archiveRow(repo,i+6)));
-        if(!bundle.repositories.length)grid.appendChild(text(grid,'div','empty-state','No public repositories were found for this GitHub account.'));
-      }catch(error){$('#publicProjects').hidden=false;$('#publicProjectsNote').textContent=error.message||'GitHub could not be reached.';}
-    }catch(error){status.textContent=error.message||'Could not load this VOID profile.';}
+        const client = window.supabase.createClient(
+          config.supabaseUrl, config.supabasePublishableKey,
+          {auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}}
+        );
+        const {data,error} = await client.rpc('void_public_profile_by_username', {input_username:voidId});
+        if (error) lookupProblem = error.message || 'VOID profile lookup is unavailable.';
+        else profile = Array.isArray(data) ? data[0] : data;
+      } catch (error) {
+        lookupProblem = error?.message || 'VOID profile lookup is unavailable.';
+      }
+    } else {
+      lookupProblem = 'VOID profile lookup is not configured; trying the public GitHub profile instead.';
+    }
+
+    if (!profile) {
+      try {
+        bundle = await window.VOIDGitHub.getBundle(voidId);
+        profile = {
+          void_id: bundle.profile.login,
+          display_name: bundle.profile.name || bundle.profile.login,
+          bio: bundle.profile.bio || '',
+          github_username: bundle.profile.login
+        };
+      } catch (error) {
+        status.textContent = 'No public VOID profile or GitHub account was found for "' + voidId + '". Check the ID and make sure public profile discovery is enabled.';
+        return;
+      }
+    }
+
+    const cover = $('#publicProfileCover');
+    cover.hidden = false;
+    status.hidden = true;
+    $('#publicDisplayName').textContent = profile.display_name || profile.void_id || voidId;
+    $('#publicVoidId').textContent = 'VOID ID / ' + (profile.void_id || voidId);
+    $('#publicBio').textContent = profile.bio || 'A builder on the internet. No bio added yet.';
+
+    let githubUsername = profile.github_username || '';
+    if (!bundle && githubUsername) {
+      try {
+        bundle = await window.VOIDGitHub.getBundle(githubUsername);
+      } catch (error) {
+        lookupProblem = error?.message || 'GitHub profile data could not be loaded.';
+      }
+    }
+    // If the VOID account has no GitHub username saved, try the searched ID.
+    if (!bundle && !githubUsername) {
+      try {
+        bundle = await window.VOIDGitHub.getBundle(voidId);
+        githubUsername = bundle.profile.login;
+      } catch (error) {
+        lookupProblem = error?.message || lookupProblem;
+      }
+    }
+
+    const githubLink = $('#publicGithubLink');
+    const footerGithub = $('#publicFooterGithub');
+    const projects = $('#publicProjects');
+    projects.hidden = false;
+
+    if (bundle) {
+      githubUsername = bundle.profile.login || githubUsername;
+      $('#publicDisplayName').textContent = profile.display_name || bundle.profile.name || bundle.profile.login;
+      $('#publicGithubId').textContent = 'GITHUB / @' + githubUsername;
+      const ghLink = 'https://github.com/' + encodeURIComponent(githubUsername);
+      githubLink.href = ghLink;
+      footerGithub.href = ghLink;
+      githubLink.hidden = false;
+      $('#publicAvatar').src = bundle.profile.avatar_url || '';
+      $('#publicAvatar').alt = (bundle.profile.name || bundle.profile.login) + ' GitHub avatar';
+
+      const stats = $('#publicStats');
+      stats.replaceChildren();
+      [
+        [num(bundle.profile.public_repos), 'PUBLIC REPOS'],
+        [num(bundle.profile.followers), 'FOLLOWERS'],
+        [num(bundle.profile.following), 'FOLLOWING'],
+        [formatDate(bundle.profile.created_at), 'ON GITHUB SINCE']
+      ].forEach(([value,label]) => text(stats,'span','',value + ' / ' + label));
+
+      $('#publicProjectsTitle').textContent = (bundle.profile.name || bundle.profile.login) + ' — public work.';
+      const note = $('#publicProjectsNote');
+      note.textContent = 'Sorted by latest repository activity' +
+        (bundle.stale ? ' · showing cached data' : '') +
+        (bundle.truncated ? ' · latest ' + bundle.repositories.length + ' repositories shown' : '') + '.';
+      const grid = $('#publicProjectGrid');
+      const list = $('#publicRepoList');
+      grid.replaceChildren();
+      list.replaceChildren();
+      bundle.repositories.slice(0,6).forEach((repo,index) => grid.appendChild(card(repo,index,index===0)));
+      bundle.repositories.slice(6).forEach((repo,index) => list.appendChild(archiveRow(repo,index+6)));
+      if (!bundle.repositories.length) {
+        grid.appendChild(text(grid,'div','empty-state','This GitHub account has no public repositories yet.'));
+      }
+    } else {
+      $('#publicGithubId').textContent = 'GITHUB / NOT LINKED';
+      githubLink.hidden = true;
+      footerGithub.href = 'https://github.com';
+      $('#publicProjectsTitle').textContent = 'Projects are not available yet.';
+      $('#publicProjectsNote').textContent = lookupProblem || 'This VOID profile has not connected a public GitHub username yet.';
+      const grid = $('#publicProjectGrid');
+      grid.replaceChildren();
+      grid.appendChild(text(grid,'div','empty-state','No repositories to show for this profile yet.'));
+      $('#publicRepoList').replaceChildren();
+    }
   }
   // Small canvas constellation, matching VOID's existing motion language.
   function startAmbient(){
