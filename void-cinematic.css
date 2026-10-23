@@ -1,25 +1,103 @@
-/* VOID: JET BLACK / ROYAL PURPLE / ELECTRIC CYAN */
+
+/* =========================================================
+   VOID — CINEMATIC DEPTH / LIGHT / MOTION
+   ========================================================= */
+
 :root {
   --void-black: #030305;
-  --void-royal-purple: #7138ff;
-  --void-electric-cyan: #00e5ff;
+  --void-royal-purple: #7138FF;
+  --void-purple-light: #A78BFA;
+  --void-electric-cyan: #00E5FF;
 }
 
+/* Atmospheric grid */
 .void-depth-grid {
   background-image:
-    linear-gradient(rgba(0, 229, 255, .045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 229, 255, .045) 1px, transparent 1px);
+    linear-gradient(rgba(167,139,250,.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(167,139,250,.055) 1px, transparent 1px);
+  background-size: 52px 52px;
+  -webkit-mask-image: linear-gradient(to bottom, black, transparent 88%);
+  mask-image: linear-gradient(to bottom, black, transparent 88%);
+  pointer-events: none;
 }
 
+/* Violet and cyan ambient lighting */
 .void-depth-halo {
-  border-color: rgba(0, 229, 255, .2);
+  border-color: rgba(167,139,250,.22);
+  box-shadow:
+    0 0 50px rgba(113,56,255,.09),
+    inset 0 0 50px rgba(0,229,255,.025);
 }
 
+.void-depth-halo::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(113,56,255,.15), transparent 35%, rgba(0,229,255,.08));
+  opacity: .8;
+}
+
+/* Floating top control */
 .void-top-button {
-  border-color: rgba(0, 229, 255, .3);
+  color: #F8F6FF;
+  background: rgba(9,7,15,.78);
+  border: 1px solid rgba(167,139,250,.32);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition: color 220ms ease, border-color 220ms ease, transform 220ms ease, box-shadow 220ms ease;
 }
 
 .void-top-button:hover {
-  color: #00e5ff;
-  border-color: #00e5ff;
+  color: var(--void-electric-cyan);
+  border-color: var(--void-electric-cyan);
+  transform: translateY(-2px);
+  box-shadow: 0 0 28px rgba(113,56,255,.15), 0 0 18px rgba(0,229,255,.08);
+}
+
+/* Reusable cinematic surface */
+.void-glass,
+.void-glass-panel {
+  background: linear-gradient(145deg, rgba(18,13,29,.76), rgba(5,5,10,.82));
+  border: 1px solid rgba(167,139,250,.17);
+  box-shadow: 0 20px 65px rgba(0,0,0,.28);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.void-glass:hover,
+.void-glass-panel:hover {
+  border-color: rgba(0,229,255,.3);
+}
+
+/* Signature gradient text */
+.void-gradient-text {
+  color: transparent;
+  background: linear-gradient(100deg, #F8F6FF 4%, #A78BFA 48%, #00E5FF 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* Ambient separator */
+.void-light-line {
+  height: 1px;
+  border: 0;
+  background: linear-gradient(90deg, transparent, rgba(113,56,255,.72), rgba(0,229,255,.55), transparent);
+}
+
+/* Subtle reveal animation */
+@keyframes void-ambient-pulse {
+  0%, 100% { opacity: .65; }
+  50% { opacity: 1; }
+}
+
+.void-ambient-pulse {
+  animation: void-ambient-pulse 5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .void-ambient-pulse {
+    animation: none;
+  }
 }
