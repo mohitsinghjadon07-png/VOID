@@ -1,40 +1,146 @@
-/* VOID: JET BLACK / ROYAL PURPLE / ELECTRIC CYAN */
+
+/* =========================================================
+   VOID — PUBLIC IDENTITY / CREATOR PROFILE
+   ========================================================= */
+
 :root {
   --p-bg: #030305;
-  --p-panel: #090910;
-  --p-border: rgba(0, 229, 255, .18);
-  --p-border-hover: rgba(0, 229, 255, .48);
-  --p-accent: #00e5ff;
-  --p-text: #f7f8ff;
-  --p-muted: #9da1b7;
+  --p-panel: #0D0A16;
+  --p-border: rgba(167,139,250,.19);
+  --p-border-hover: rgba(0,229,255,.48);
+  --p-purple: #7138FF;
+  --p-purple-light: #A78BFA;
+  --p-cyan: #00E5FF;
+  --p-text: #F8F6FF;
+  --p-muted: #A8A2BA;
 }
 
-body {
-  background: #030305;
-  color: #f7f8ff;
+body,
+body[data-theme="light"] {
+  color-scheme: dark;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(113,56,255,.16), transparent 45%),
+    #030305;
+  color: var(--p-text);
 }
 
 .public-profile-cover {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   background:
-    radial-gradient(
-      ellipse at 100% 0%,
-      rgba(0, 229, 255, .09),
-      transparent 43%
-    ),
-    linear-gradient(145deg, #100d19, #030305);
+    radial-gradient(ellipse at 90% 5%, rgba(0,229,255,.13), transparent 32%),
+    radial-gradient(ellipse at 8% 100%, rgba(113,56,255,.26), transparent 48%),
+    linear-gradient(145deg, #171027 0%, #09070F 55%, #030305 100%);
+  border: 1px solid var(--p-border);
+  border-radius: 24px;
+}
+
+.public-profile-cover::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 25%, rgba(255,255,255,.035) 48%, transparent 65%);
+}
+
+.public-profile-nav {
+  background: rgba(5,4,9,.76);
+  border-bottom: 1px solid var(--p-border);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
 }
 
 .public-profile-nav .text-link,
 .public-profile-actions a,
 #publicGithubId {
-  color: #00e5ff;
+  color: var(--p-cyan);
+  text-decoration-color: rgba(0,229,255,.32);
+  transition: color 180ms ease, text-shadow 180ms ease;
+}
+
+.public-profile-nav .text-link:hover,
+.public-profile-actions a:hover,
+#publicGithubId:hover {
+  color: #B4F9FF;
+  text-shadow: 0 0 18px rgba(0,229,255,.28);
 }
 
 .public-profile-nav .brand-symbol {
-  background: rgba(0, 229, 255, .07);
+  background: linear-gradient(145deg, rgba(113,56,255,.20), rgba(0,229,255,.07));
+  border: 1px solid var(--p-border);
+  box-shadow: 0 0 22px rgba(113,56,255,.10);
 }
 
 .public-profile-avatar {
-  border-color: rgba(0, 229, 255, .38);
-  box-shadow: 0 0 0 6px rgba(0, 229, 255, .06);
+  border: 2px solid rgba(167,139,250,.78);
+  box-shadow:
+    0 0 0 6px rgba(113,56,255,.10),
+    0 0 34px rgba(113,56,255,.23),
+    0 0 50px rgba(0,229,255,.07);
+}
+
+.public-profile-card,
+.public-build-card,
+.public-profile-section,
+.public-project-card {
+  background:
+    radial-gradient(ellipse at 100% 0%, rgba(113,56,255,.075), transparent 50%),
+    linear-gradient(145deg, rgba(19,14,30,.96), rgba(7,7,12,.98));
+  border: 1px solid var(--p-border);
+  border-radius: 20px;
+  transition: border-color 220ms ease, transform 220ms ease, box-shadow 220ms ease;
+}
+
+.public-build-card:hover,
+.public-project-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--p-border-hover);
+  box-shadow: 0 18px 44px rgba(0,0,0,.3), 0 0 24px rgba(113,56,255,.09);
+}
+
+.public-profile-cover h1,
+.public-profile-section h2,
+.public-profile-card h2 {
+  color: var(--p-text);
+  letter-spacing: -.035em;
+}
+
+.public-profile-cover p,
+.public-profile-section p {
+  color: var(--p-muted);
+}
+
+.public-profile-actions a,
+.public-profile-actions button {
+  border-radius: 12px;
+}
+
+.public-profile-actions button {
+  color: var(--p-text);
+  background: rgba(113,56,255,.12);
+  border: 1px solid var(--p-border);
+}
+
+.public-profile-actions button:hover {
+  border-color: var(--p-cyan);
+  box-shadow: 0 0 24px rgba(0,229,255,.08);
+}
+
+.public-profile-section a {
+  color: var(--p-cyan);
+}
+
+@media (max-width: 640px) {
+  .public-profile-cover {
+    border-radius: 18px;
+  }
+
+  .public-profile-card,
+  .public-build-card,
+  .public-profile-section,
+  .public-project-card {
+    border-radius: 16px;
+  }
 }
